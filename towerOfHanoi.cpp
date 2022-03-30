@@ -4,77 +4,22 @@
 
 using namespace std;
 
-void towersGeneral(stack<int> &Cstack, int numDisks)
+void towersGeneral(stack<int> &destination, int numDisks)
 {
 
-	stack<int> Astack;
+	stack<int> source;
 	for (int i = numDisks; i > 0; i--)
 	{
-		Astack.push(i);
+		source.push(i);
 	}
 
-	stack<int> Bstack;
+	stack<int> auxiliary;
 
 	int step = pow(2, numDisks) - 1;
 
 	int itr = 0;
 
 	if (numDisks % 2 == 0)
-	{
-		/*
-
-		while (itr<=step)
-		{
-				switch (itr%3)
-			{
-				case 0 :
-					if(){
-
-				}
-					else if(){
-
-
-				}
-					else{
-						if ()
-						{
-
-						}
-						else{
-
-						}
-
-				}
-
-				case 1 :
-					if(){
-
-					}
-					else if(){
-
-					}
-					else{
-
-					}
-
-
-				case 2 :
-					if(){
-
-					}
-					else if(){
-
-					}
-					else{
-
-					}
-			}
-			itr++;
-
-		}
-		*/
-	}
-	else
 	{
 
 		while (itr < step)
@@ -83,84 +28,173 @@ void towersGeneral(stack<int> &Cstack, int numDisks)
 			{
 				/****CASE-0******/
 			case 0:
-				if (Cstack.empty() == true)
+				if (auxiliary.empty() == true)
 				{
-					Cstack.push(Astack.top());
-					Astack.pop();
+					auxiliary.push(source.top());
+					source.pop();
 				}
-				else if (Astack.empty() == true)
+				else if (source.empty() == true)
 				{
-					Astack.push(Cstack.top());
-					Cstack.pop();
+					source.push(auxiliary.top());
+					auxiliary.pop();
 				}
 				else
 				{
-					if (Cstack.top() > Astack.top())
+					if (auxiliary.top() > source.top())
 					{
-						Cstack.push(Astack.top());
-						Astack.pop();
+						auxiliary.push(source.top());
+						source.pop();
 					}
 					else
 					{
-						Astack.push(Cstack.top());
-						Cstack.pop();
+						source.push(auxiliary.top());
+						auxiliary.pop();
+					}
+				}
+				break;
+				/****CASE-1******/
+			case 1:
+				if (destination.empty() == true)
+				{
+					destination.push(source.top());
+					source.pop();
+				}
+				else if (source.empty() == true)
+				{
+					source.push(destination.top());
+					destination.pop();
+				}
+				else
+				{
+					if (destination.top() > source.top())
+					{
+						destination.push(source.top());
+						source.pop();
+					}
+					else
+					{
+						source.push(destination.top());
+						destination.pop();
+					}
+				}
+				break;
+				/****CASE-2******/
+			case 2:
+				if (destination.empty() == true)
+				{
+					destination.push(auxiliary.top());
+					auxiliary.pop();
+				}
+				else if (auxiliary.empty() == true)
+				{
+					auxiliary.push(destination.top());
+					destination.pop();
+				}
+				else
+				{
+					if (destination.top() > auxiliary.top())
+					{
+						destination.push(auxiliary.top());
+						auxiliary.pop();
+					}
+					else
+					{
+						auxiliary.push(destination.top());
+						destination.pop();
+					}
+				}
+				break;
+			}
+			itr++;
+		}
+	}
+	else
+	{
+
+		while (itr <step)
+		{
+			switch (itr % 3)
+			{
+				/****CASE-0******/
+			case 0:
+				if (destination.empty() == true)
+				{
+					destination.push(source.top());
+					source.pop();
+				}
+				else if (source.empty() == true)
+				{
+					source.push(destination.top());
+					destination.pop();
+				}
+				else
+				{
+					if (destination.top() > source.top())
+					{
+						destination.push(source.top());
+						source.pop();
+					}
+					else
+					{
+						source.push(destination.top());
+						destination.pop();
 					}
 				}
 				break;
 			/****CASE-1******/
 			case 1:
-				if (Bstack.empty() == true)
+				if (auxiliary.empty() == true)
 				{
-					Bstack.push(Astack.top());
-					Astack.pop();
+					auxiliary.push(source.top());
+					source.pop();
 				}
-				else if (Astack.empty() == true)
+				else if (source.empty() == true)
 				{
-					Astack.push(Bstack.top());
-					Bstack.pop();
+					source.push(auxiliary.top());
+					auxiliary.pop();
 				}
 				else
 				{
-					if (Bstack.top() > Astack.top())
+					if (auxiliary.top() > source.top())
 					{
-						Bstack.push(Astack.top());
-						Astack.pop();
+						auxiliary.push(source.top());
+						source.pop();
 					}
 					else
 					{
-						Astack.push(Bstack.top());
-						Bstack.pop();
+						source.push(auxiliary.top());
+						auxiliary.pop();
 					}
 				}
 				break;
 			/****CASE-2******/
 			case 2:
-				if (Cstack.empty() == true)
+				if (destination.empty() == true)
 				{
-					Cstack.push(Bstack.top());
-					Bstack.pop();
+					destination.push(auxiliary.top());
+					auxiliary.pop();
 				}
-				else if (Bstack.empty() == true)
+				else if (auxiliary.empty() == true)
 				{
-					Bstack.push(Cstack.top());
-					Cstack.pop();
+					auxiliary.push(destination.top());
+					destination.pop();
 				}
 				else
 				{
-					if (Cstack.top() > Bstack.top())
+					if (destination.top() > auxiliary.top())
 					{
-						Cstack.push(Bstack.top());
-						Bstack.pop();
+						destination.push(auxiliary.top());
+						auxiliary.pop();
 					}
 					else
 					{
-						Bstack.push(Cstack.top());
-						Cstack.pop();
+						auxiliary.push(destination.top());
+						destination.pop();
 					}
 				}
 				break;
 			}
-			
+
 			itr++;
 		}
 	}
@@ -169,15 +203,18 @@ void towersGeneral(stack<int> &Cstack, int numDisks)
 int main()
 {
 	stack<int> result; // The final peg
-	// Challenge problem: write a general towersGeneral function
-	// result = {};
-	towersGeneral(result, 7);
+	
+	int x;
+	cout << " Please Enter A Disk Count"<< endl;
+	cin >> x ;
+	
+	towersGeneral(result, x);
 	while (!result.empty())
 	{
 		cout << ' ' << result.top();
 		result.pop();
 	}
 	cout << '\n';
-	// Show the final peg
+	
 	return 0;
 }
